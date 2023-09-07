@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form,render_hidden_errors,render_form_row %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+
+
+{% block page_content %}
+
+    <div class="container">
+        <div class="row">
+            <h2>高级搜索</h2>
+            <hr/>
+            <form method="POST">
+                {{ render_messages() }}
+                {{ render_hidden_errors(form) }}
+                {{ form.csrf_token }}
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.all_these_words],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">输入重要字词： 砀山鸭梨</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.this_exact_word_or_phrase],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">用引号将需要完全匹配的字词引起： "鸭梨"</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.any_of_these_words],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">在所需字词之间添加 OR： 批发 OR 特价</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.none_of_these_words],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">在不需要的字词前添加一个减号： -山大、-"刺梨"</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.site_or_domain],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">搜索某个网站（例如 wikipedia.org ），或将搜索结果限制为特定的域名类型(例如 .edu、.org 或 .gov)</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.time_limit],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">查找在指定时间内更新的网页。</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.is_title_only],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">在整个网页或者网页标题中搜索字词。</div>
+                </div>
+                {{ render_form_row([form.submit]) }}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

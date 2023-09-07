@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block head_add %}
+    <title> {{ keywords }} - 南开新闻检索 </title>
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="padding: 1rem;text-align:center;">
+                <form action="{{ url_for('front._result_page') }}" method="get">
+                    <div class="input-group" style="font-size: 14px;">
+
+                        <label style="width:100%">
+                            <div style="max-width: 584px; width: 100% ;position: absolute;">
+                                <input type="text" class="form-control" name="keywords" style="width: 100% ;position: absolute;border-radius: 24px;" value="{{ keywords }}">
+                                {#<button style="position: absolute;top: 7px;right: 5px;background-color: #fff;border: none;outline: none;">搜索历史</button>#}
+                            </div>
+                            <button class="btn btn-outline-dark" type="submit">立即搜索</button>
+                        </label>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9" style="padding: 1rem; font-family: Google Sans,arial,sans-serif;">
+                <div id="result-stats" style="font-size:14px">找到约 {{ len_results }} 条结果
+                    <nobr> （用时 {{ cost_time }} 秒）&nbsp;</nobr>&nbsp;<a href="{{ url_for('front._advanced_search', keywords = keywords) }}" style="font-size:14px">高级搜索</a>
+                </div>
+                <br/>
+                {% for result in results %}
+                    <div style="padding: 0 0 1rem 0">
+                        <a href="{{ result[1] }}" style="font-size:18px">{{ result[0] }}</a><br/>
+                        {% if result[2]!="" %}
+                            <span style="font-size:14px">{{ result[2] }}</span><br/>
+                        {% endif %}
+                        <a href="{{ result[1] }}" style="font-size:12px;color: #626675;">{{ result[1] }}</a>&nbsp;&nbsp;<a href="{{ url_for('front._snapshot',url=result[1]) }}"
+                                                                                                                           style="font-size:12px;color: #626675;">网页快照</a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-3" style="padding: 2rem 0 0 0; font-family: Google Sans,arial,sans-serif;">
+                <h6 style="padding-left:1.5rem">相关推荐</h6>
+                <ul id="suggestion" style="list-style:none;font-size:14px">
+
+                </ul>
+                <hr/>
+                {% if search_history %}
+                    <div class="row" style="padding-left:1.5rem">
+                        <div class="col-md-12" style="max-width:584px;margin: 0 auto"><h6 style="text-align:left">搜索历史</h6></div>
+                        <br/>
+                        <div class="row">
+                            <div style="max-width:584px;margin: 0 auto;float:left;position: relative;">
+                                {% for i in search_history %}
+                                    <div style="padding: 5px;float:left;">
+                                        <a href="{{ url_for('front._result_page', keywords=i) }}" class="btn btn-outline-secondary"
+                                           style="width: 100% ;max-width: 584px;border-radius: 24px;margin: 0 auto">{{ i }}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script_add %}
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/suggest.js') }}"></script>
+    <script>
+        window.onload = function () {
+            query_suggest('{{ keywords }}');
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block head_add %}
+    <title> {{ keywords }} - 南开新闻检索 </title>
+{% endblock %}
+
+{% block page_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="padding: 1rem;text-align:center;">
+            <form action="{{ url_for('front._result_page') }}" method="get">
+                <div class="input-group" style="font-size: 14px;">
+                    <label style="width:100%">
+                        <input type="text" class="form-control" name="keywords" value="{{ keywords }}" style="max-width: 584px; width: 100% ;border-radius: 24px;position: absolute;">
+                        <button class="btn btn-outline-secondary" type="submit">立即搜索</button>
+                    </label>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding: 1rem; font-family: Google Sans,arial,sans-serif;">
+            <div id="result-stats" style="font-size:14px">找到约 0 条结果
+                <nobr> （用时 {{ cost_time }} 秒）&nbsp;</nobr>
+            </div>
+            <br/>
+            <p aria-level="3" role="heading" style="padding-top:.33em">找不到和您查询的“<span style="color:red"><em>{{ keywords }}</em></span>”相符的内容或信息。</p>
+            <p style="margin-top:1em">建议：</p>
+            <ul style="margin-bottom:2em">
+                <li>请检查输入字词有无错误。</li>
+                <li>请尝试其他查询词。</li>
+                <li>请改用较常见的字词。</li>
+                <li>请减少查询字词的数量。</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

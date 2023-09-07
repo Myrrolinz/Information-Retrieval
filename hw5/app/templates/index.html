@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="padding: 5rem;text-align:center;">
+                <form action="{{ url_for('front._result_page') }}" method="get">
+                    <div class="input-group" style="font-size: 14px;">
+                        <label style="width:100%;vertical-align:middle;">
+                            <input type="text" class="form-control" name="keywords" placeholder="请输入关键词" style="width: 100% ;max-width: 584px;border-radius: 24px;margin: 0 auto">
+                        </label>
+                    </div>
+                    <div class="input-group-append" style="padding:5px">
+                        <button id="search-button" class="btn btn-outline-secondary" type="submit">立即搜索</button>
+                        <button class="btn btn-outline-secondary" onClick="window.location.href='{{ url_for('front._advanced_search') }}'" type="button">高级模式</button>
+                    </div>
+                </form>
+                <br/>
+                {% if search_history %}
+                    <div class="row">
+                        <div class="col-md-12" style="max-width:584px;margin: 0 auto"><h6 style="text-align:left">搜索历史</h6></div>
+                        <br/>
+                        <div class="row">
+                            <div style="max-width:584px;margin: 0 auto;float:left;position: relative;">
+                                {% for i in search_history %}
+                                    <div style="padding: 5px;float:left;">
+                                        <a href="{{ url_for('front._result_page', keywords=i) }}" class="btn btn-outline-secondary"
+                                           style="width: 100% ;max-width: 584px;border-radius: 24px;margin: 0 auto">{{ i }}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

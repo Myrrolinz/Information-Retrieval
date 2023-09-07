@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {% block styles %}
+            {{ bootstrap.load_css() }}
+        {% endblock %}
+    {% endblock %}
+    {% block head_add %}
+        <title>南开新闻检索</title>
+    {% endblock %}
+</head>
+<body>
+{% block page_content %}
+{% endblock %}
+{% block scripts %}
+    {{ bootstrap.load_js() }}
+{% endblock %}
+
+{% block script_add %}
+{% endblock %}
+</body>
+</html>
